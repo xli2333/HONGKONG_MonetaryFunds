@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块一：开篇总览 - 香港美元货币基金业务报告</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Noto Sans SC', sans-serif; }
+        .dark body { color: #f8fafc; }
+        
+        .gemini-gradient-text {
+            background: linear-gradient(90deg, #4f46e5, #c026d3, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .hero-gradient-bg {
+            background: linear-gradient(-45deg, #1e1b4b, #172554, #312e81, #4c1d95);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .report-card {
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .report-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border-color: #c026d3;
+        }
+
+        .dark .report-card {
+            background-color: rgba(30, 41, 59, 0.5);
+            border-color: #374151;
+        }
+        .dark .report-card:hover {
+            border-color: #a855f7;
+        }
+        
+        /* --- MODIFICATION START --- */
+        .nav-block {
+            border-radius: 1rem;
+            padding: 1.5rem; /* Reduced padding */
+            color: white;
+            transition: all 0.4s ease-in-out;
+            background-size: 200% 200%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .nav-block:hover {
+            transform: translateY(-8px) scale(1.03); /* Adjusted hover effect */
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.3);
+            background-position: right center;
+        }
+        .nav-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 1rem;
+            padding: 2px;
+            background: linear-gradient(45deg, #a855f7, #ec4899, #6366f1);
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .nav-block:hover::before {
+            opacity: 1;
+        }
+
+        .nav-block .fa-solid { 
+            color: rgba(255, 255, 255, 0.8); 
+            margin-bottom: 0.75rem; /* Reduced margin */
+            font-size: 2rem; /* Reduced icon size */
+        }
+        .nav-block h3 { 
+            font-size: 1.25rem; /* Reduced heading size (Tailwind: text-xl) */
+            font-weight: 700; 
+            color: white; 
+            line-height: 1.3; 
+        }
+        /* --- MODIFICATION END --- */
+
+        .nav-block-1 { background-image: linear-gradient(135deg, #667eea, #764ba2); }
+        .nav-block-2 { background-image: linear-gradient(135deg, #89f7fe, #66a6ff); }
+        .nav-block-3 { background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb); }
+        .nav-block-4 { background-image: linear-gradient(135deg, #56ab2f, #a8e063); }
+        .nav-block-5 { background-image: linear-gradient(135deg, #fc6076, #ff9a44); }
+
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-section { animation: fadeIn 0.8s ease-out forwards; }
+        
+        .fade-in-on-scroll { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; transform: translateY(20px); }
+        .fade-in-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-500">
+
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-extrabold flex items-center">
+                <i class="fa-solid fa-chart-line gemini-gradient-text text-2xl mr-2"></i>
+                <span class="text-slate-900 dark:text-white">业务分析报告</span>
+            </a>
+            <button id="theme-toggle" class="p-2.5 rounded-lg transition-colors duration-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <i id="theme-icon" class="fa-solid fa-moon text-xl text-slate-600 dark:text-slate-400"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+        <section id="module1" class="space-y-20 md:space-y-28">
+            <div class="text-center overflow-hidden fade-in-section">
+                <div class="relative max-w-5xl mx-auto py-20 md:py-28 px-4 rounded-3xl overflow-hidden">
+                    <div class="absolute inset-0 hero-gradient-bg opacity-20 dark:opacity-30"></div>
+                    <div class="relative">
+                         <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight gemini-gradient-text leading-tight">
+                            香港美元货币基金业务
+                        </h1>
+                         <h2 class="mt-4 text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                            可行性分析及战略定位报告
+                        </h2>
+                        <p class="mt-8 max-w-3xl mx-auto text-lg md:text-xl text-slate-600 dark:text-slate-400">
+                            一个正在爆发的战略新赛道：市场数据、竞争格局与我方核心优势研判
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-on-scroll">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+                    <div class="report-card rounded-2xl p-8 flex flex-col items-center text-center">
+                        <div class="flex items-center text-slate-500 dark:text-slate-400 mb-4">
+                            <i class="fa-solid fa-arrow-trend-up mr-3 text-xl"></i><h4 class="font-semibold text-lg text-slate-800 dark:text-slate-200">市场规模与增长轨迹</h4>
+                        </div>
+                        <p class="text-md text-slate-600 dark:text-slate-300 mb-2">四年近四倍的爆发式增长</p>
+                        <div class="my-4">
+                            <span class="text-6xl font-extrabold gemini-gradient-text" id="market-size-counter">84.38</span>
+                            <span class="text-2xl font-medium text-slate-900 dark:text-white">亿 美元</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 flex-grow mt-2">
+                            香港注册货币基金总AUM在2020年末至2024年9月间实现了近四倍的增长，清晰地表明市场需求正以前所未有的速度被激活。
+                        </p>
+                    </div>
+
+                    <div class="report-card rounded-2xl p-8 flex flex-col items-center text-center">
+                        <div class="flex items-center text-slate-500 dark:text-slate-400 mb-4">
+                            <i class="fa-solid fa-gauge-high mr-3 text-xl"></i><h4 class="font-semibold text-lg text-slate-800 dark:text-slate-200">核心驱动力</h4>
+                        </div>
+                        <p class="text-md text-slate-600 dark:text-slate-300 mb-2">高利率下的“现金管理”需求</p>
+                        <div class="my-4">
+                            <div class="relative w-48 h-24 mx-auto">
+                                <svg viewBox="0 0 100 50" class="w-full h-full">
+                                    <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="currentColor" class="text-slate-200 dark:text-slate-700" stroke-width="8" stroke-linecap="round"/>
+                                    <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" class="text-indigo-500" stroke="currentColor" stroke-width="8" stroke-linecap="round" 
+                                          stroke-dasharray="125.6" stroke-dashoffset="12.56" />
+                                    <line id="gauge-needle" x1="50" y1="50" x2="85" y2="5" stroke="currentColor" class="text-fuchsia-600" stroke-width="2.5" stroke-linecap="round" style="transform-origin: 50px 50px; transition: transform 1.5s ease-out; transform: rotate(120deg);" />
+                                </svg>
+                                <span class="absolute bottom-0 left-1/2 -translate-x-1/2 text-4xl font-bold gemini-gradient-text">4-5%</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 flex-grow mt-2">
+                            美元货币基金能提供远高于传统银行存款的收益率，促使投资者寻求兼具高流动性与低风险的新型现金管理工具。
+                        </p>
+                    </div>
+
+                    <div class="report-card rounded-2xl p-8 flex flex-col items-center text-center">
+                        <div class="flex items-center text-slate-500 dark:text-slate-400 mb-4">
+                            <i class="fa-solid fa-users mr-3 text-xl"></i><h4 class="font-semibold text-lg text-slate-800 dark:text-slate-200">市场基础</h4>
+                        </div>
+                        <p class="text-md text-slate-600 dark:text-slate-300 mb-2">投资者行为已全面线上化</p>
+                         <div class="my-4">
+                             <div class="relative w-40 h-40 mx-auto flex items-center justify-center">
+                                <svg class="w-full h-full" viewBox="0 0 36 36">
+                                    <path class="text-slate-200 dark:text-slate-700" stroke="currentColor" stroke-width="3" fill="none"
+                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path id="progress-ring" class="text-indigo-500" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"
+                                        stroke-dasharray="0, 100"
+                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        style="transition: stroke-dasharray 1.5s ease-out;"/>
+                                </svg>
+                                <span class="absolute text-5xl font-bold gemini-gradient-text">96%</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 flex-grow mt-2">
+                            高达96%的新开券商账户通过线上方式完成，为我们推出纯线上服务扫清了用户习惯上的障碍。
+                        </p>
+                    </div>
+                    
+                    <div class="report-card rounded-2xl p-8 flex flex-col items-center text-center">
+                        <div class="flex items-center text-slate-500 dark:text-slate-400 mb-4">
+                            <i class="fa-solid fa-puzzle-piece mr-3 text-xl"></i><h4 class="font-semibold text-lg text-slate-800 dark:text-slate-200">主流商业模式</h4>
+                        </div>
+                        <p class="text-md text-slate-600 dark:text-slate-300 mb-2">以“零费率”作为获客引擎</p>
+                        <div class="my-4">
+                            <div class="flex flex-col items-center justify-center gap-3 mt-4">
+                                <span class="bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-300 text-md font-medium px-4 py-2 rounded-lg">零费率</span>
+                                <i class="fa-solid fa-arrow-down text-slate-400"></i>
+                                <span class="bg-fuchsia-100 dark:bg-fuchsia-900/50 text-fuchsia-800 dark:text-fuchsia-300 text-md font-medium px-4 py-2 rounded-lg">客户获取引擎</span>
+                                <i class="fa-solid fa-arrow-down text-slate-400"></i>
+                                <span class="bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-300 text-md font-medium px-4 py-2 rounded-lg">生态战略</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 flex-grow mt-6">
+                            金融科技券商将其定位为获取客户和沉淀资产的战略性工具，最终通过交叉销售高利润业务实现变现。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-on-scroll max-w-4xl mx-auto text-center">
+                <blockquote class="text-3xl md:text-4xl font-bold italic text-slate-900 dark:text-white relative px-4">
+                    <div class="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-indigo-500 to-fuchsia-500 rounded-full"></div>
+                    “成为内地投资者离岸资产管理的信任桥梁”
+                </blockquote>
+                <p class="mt-8 text-lg text-slate-600 dark:text-slate-400">
+                    基于以上分析，我们的独特价值主张 (UVP) 应当是：<strong>“为内地投资者提供最流畅、最贴合文化习惯的离岸美元现金及投资管理平台”</strong>。我们聚焦于一个自身拥有天然“赢的权利”的细分市场，利用我们对内地投资者思维模式、投资偏好和核心痛点的深刻理解，扮演“值得信赖的文化与运营桥梁”角色。
+                </p>
+            </div>
+
+             <div class="fade-in-on-scroll">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <a href="module2.html" class="nav-block nav-block-1">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        <h3>市场深度解析</h3>
+                    </a>
+                    <a href="module3.html" class="nav-block nav-block-2">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h3>监管与合规</h3>
+                    </a>
+                    <a href="module4.html" class="nav-block nav-block-3" style="color: #1e293b;">
+                        <i class="fa-solid fa-chess"></i>
+                        <h3>竞争格局</h3>
+                    </a>
+                    <a href="module5.html" class="nav-block nav-block-4">
+                        <i class="fa-solid fa-map-signs"></i>
+                        <h3>行动蓝图</h3>
+                    </a>
+                    <a href="module6.html" class="nav-block nav-block-5">
+                        <i class="fa-solid fa-bullseye"></i>
+                        <h3>路线图与KPI</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-200 dark:border-slate-800 mt-20">
+        <div class="container mx-auto px-6 py-8 text-center text-slate-500 dark:text-slate-400">
+            <p class="text-slate-600 dark:text-slate-400">嘉实基金: 李先强</p>
+        </div>
+    </footer>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const userTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const applyTheme = (theme) => { 
+                if (theme === 'dark') { 
+                    document.documentElement.classList.add('dark'); 
+                    themeIcon.classList.remove('fa-moon'); 
+                    themeIcon.classList.add('fa-sun'); 
+                } else { 
+                    document.documentElement.classList.remove('dark'); 
+                    themeIcon.classList.remove('fa-sun'); 
+                    themeIcon.classList.add('fa-moon'); 
+                } 
+            };
+            if (userTheme === 'dark' || (!userTheme && systemTheme)) { applyTheme('dark'); } else { applyTheme('light'); }
+            themeToggle.addEventListener('click', () => { 
+                const isDark = document.documentElement.classList.toggle('dark'); 
+                localStorage.setItem('theme', isDark ? 'dark' : 'light'); 
+                applyTheme(isDark ? 'dark' : 'light'); 
+            });
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        
+                        const counterElement = entry.target.querySelector('#market-size-counter');
+                        if (counterElement) {
+                            animateCounter(counterElement, 84.38, 399.18, 2000);
+                        }
+                        
+                        const gaugeNeedle = entry.target.querySelector('#gauge-needle');
+                        if (gaugeNeedle) {
+                            setTimeout(() => { gaugeNeedle.style.transform = 'rotate(120deg)'; }, 100);
+                        }
+
+                        const progressRing = entry.target.querySelector('#progress-ring');
+                        if (progressRing) {
+                             setTimeout(() => { progressRing.style.strokeDasharray = '96, 100'; }, 100);
+                        }
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
+            
+            function animateCounter(element, start, end, duration) {
+                let startTime = null;
+                const step = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    const current = start + progress * (end - start);
+                    element.textContent = current.toFixed(2);
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        element.textContent = end.toFixed(2);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+        });
+    </script>
+</body>
+</html>

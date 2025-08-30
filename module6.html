@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块六：实施路线图与KPI - 香港美元货币基金业务报告</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base styles from the established UI framework */
+        body { font-family: 'Noto Sans SC', sans-serif; }
+        .dark body { color: #f8fafc; }
+        
+        .gemini-gradient-text { background: linear-gradient(90deg, #4f46e5, #c026d3, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
+        
+        .report-card { border: 1px solid #e5e7eb; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); background-color: rgba(255, 255, 255, 0.8); }
+        .report-card:hover { transform: translateY(-6px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
+        .dark .report-card { background-color: rgba(30, 41, 59, 0.5); border-color: #374151; }
+
+        /* --- MODIFICATION START --- */
+        .nav-block {
+            border-radius: 1rem;
+            padding: 1.5rem; /* Reduced padding */
+            color: white;
+            transition: all 0.4s ease-in-out;
+            background-size: 200% 200%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .nav-block:hover {
+            transform: translateY(-8px) scale(1.03); /* Adjusted hover effect */
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.3);
+            background-position: right center;
+        }
+        .nav-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 1rem;
+            padding: 2px;
+            background: linear-gradient(45deg, #a855f7, #ec4899, #6366f1);
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .nav-block:hover::before {
+            opacity: 1;
+        }
+
+        .nav-block .fa-solid { 
+            color: rgba(255, 255, 255, 0.8); 
+            margin-bottom: 0.75rem; /* Reduced margin */
+            font-size: 2rem; /* Reduced icon size */
+        }
+        .nav-block h3 { 
+            font-size: 1.25rem; /* Reduced heading size (Tailwind: text-xl) */
+            font-weight: 700; 
+            color: white; 
+            line-height: 1.3; 
+        }
+        /* --- MODIFICATION END --- */
+
+        .nav-block-1 { background-image: linear-gradient(135deg, #667eea, #764ba2); }
+        .nav-block-2 { background-image: linear-gradient(135deg, #89f7fe, #66a6ff); }
+        .nav-block-3 { background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb); }
+        .nav-block-4 { background-image: linear-gradient(135deg, #56ab2f, #a8e063); }
+        .nav-block-5 { background-image: linear-gradient(135deg, #fc6076, #ff9a44); }
+
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-section { animation: fadeIn 0.8s ease-out forwards; }
+        .fade-in-on-scroll { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; transform: translateY(20px); }
+        .fade-in-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+        .pipeline { position: relative; }
+        .pipeline::before {
+            content: '';
+            position: absolute;
+            top: 1rem; bottom: 1rem; left: 1.5rem;
+            width: 3px;
+            background-color: #e5e7eb;
+            border-radius: 2px;
+        }
+        .dark .pipeline::before { background-color: #334155; }
+        .pipeline-item { position: relative; }
+        .pipeline-header { display: flex; align-items: center; cursor: pointer; padding: 0.5rem 0; }
+        .pipeline-dot {
+            width: 3rem; height: 3rem;
+            border-radius: 9999px;
+            display: flex; align-items: center; justify-content: center;
+            background-color: #f1f5f9;
+            border: 3px solid #cbd5e1;
+            transition: all 0.4s ease;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+        .dark .pipeline-dot { background-color: #1e293b; border-color: #475569; }
+        .pipeline-title { font-size: 1.25rem; font-weight: 700; color: #475569; margin-left: 1.5rem; transition: color 0.4s ease; }
+        .dark .pipeline-title { color: #94a3b8; }
+        .pipeline-item.active .pipeline-dot { border-color: transparent; background-image: linear-gradient(135deg, #818cf8, #c084fc); color: white; transform: scale(1.1); }
+        .pipeline-item.active .pipeline-title { color: #111827; }
+        .dark .pipeline-item.active .pipeline-title { color: #fff; }
+        
+        .pipeline-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-in-out, opacity 0.5s ease-in-out, padding-left 0.7s ease-in-out, padding-bottom 0.7s ease-in-out;
+            padding-left: 5.5rem;
+        }
+        .pipeline-item.active .pipeline-content {
+            max-height: 500px;
+            opacity: 1;
+            padding-bottom: 2rem;
+        }
+        .pipeline-content ul { font-size: 1.125rem; }
+
+        .kpi-grid { 
+            display: grid; 
+            grid-template-columns: repeat(1, 1fr);
+            gap: 2rem;
+        }
+        @media (min-width: 768px) {
+             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .kpi-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background-color: #fff;
+        }
+        .dark .kpi-card { border-color: #374151; background-color: #1e293b; }
+        .kpi-summary { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .kpi-summary i { font-size: 2.5rem; margin-bottom: 1rem; }
+        .kpi-summary h4 { font-size: 1.25rem; font-weight: 700; }
+
+        .kpi-details { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.6s ease-out, opacity 0.4s ease-out 0.2s, margin-top 0.6s ease-out; }
+        
+        .kpi-card.expanded {
+            transform: scale(1.05);
+            border-color: #a855f7;
+            box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.3);
+        }
+        .kpi-card.expanded .kpi-details {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-500">
+
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+             <a href="index.html" class="text-xl font-extrabold flex items-center">
+                <i class="fa-solid fa-chart-line gemini-gradient-text text-2xl mr-2"></i>
+                <span class="text-slate-900 dark:text-white">业务分析报告</span>
+            </a>
+            <button id="theme-toggle" class="p-2.5 rounded-lg transition-colors duration-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <i id="theme-icon" class="fa-solid fa-moon text-xl text-slate-600 dark:text-slate-400"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+        <section id="module6" class="space-y-16 md:space-y-24">
+            <div class="fade-in-section text-center max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-black gemini-gradient-text">实施路线图与KPI</h1>
+                <p class="mt-4 text-lg md:text-xl text-slate-600 dark:text-slate-400">将整个战略报告收敛于一个可执行、可衡量、资源需求明确的行动计划。本页旨在展示周密的项目落地计划与科学的成效评估体系，确保项目能够稳步推进并最终达成商业目标。</p>
+            </div>
+            
+            <div class="fade-in-on-scroll space-y-8">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">分阶段实施路线图：确保项目稳步推进，有效控制风险</h3>
+                    <p class="mt-3 text-base text-slate-600 dark:text-slate-400">为确保项目的高质量交付和市场的成功启动，我们建议采取分阶段的实施策略。这种方法允许我们进行充分的开发、测试和优化，从而最大限度地降低风险，并在全面推广前确保产品体验的卓越性。</p>
+                </div>
+                <div class="report-card rounded-2xl p-8 md:p-10">
+                    <div class="pipeline">
+                        <div class="pipeline-item">
+                            <div class="pipeline-header">
+                                <div class="pipeline-dot"><i class="fa-solid fa-layer-group text-xl"></i></div>
+                                <h4 class="pipeline-title">第一阶段 (Q1-Q2): 基础建设期</h4>
+                            </div>
+                            <div class="pipeline-content">
+                                <ul class="text-slate-600 dark:text-slate-300 space-y-2 list-disc list-inside">
+                                    <li>完成与首批2-3家头部基金公司的合作协议签署及技术对接。</li>
+                                    <li>完成平台开发与集成，重点确保“即时购买力”功能的稳定性。</li>
+                                    <li>完成所有线上合规流程的系统落地并通过内部验收。</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="pipeline-item">
+                            <div class="pipeline-header">
+                                <div class="pipeline-dot"><i class="fa-solid fa-vial-circle-check text-xl"></i></div>
+                                <h4 class="pipeline-title">第二阶段 (Q3): 内部试运行与优化期</h4>
+                            </div>
+                            <div class="pipeline-content">
+                                <ul class="text-slate-600 dark:text-slate-300 space-y-2 list-disc list-inside">
+                                    <li>向内部员工及部分VIP客户开放“邀请制”试用。</li>
+                                    <li>收集真实用户反馈，修复潜在缺陷，精细化打磨UI/UX。</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="pipeline-item">
+                            <div class="pipeline-header">
+                                <div class="pipeline-dot"><i class="fa-solid fa-rocket text-xl"></i></div>
+                                <h4 class="pipeline-title">第三阶段 (Q4): 全面市场推广期</h4>
+                            </div>
+                            <div class="pipeline-content">
+                                <ul class="text-slate-600 dark:text-slate-300 space-y-2 list-disc list-inside">
+                                    <li>正式向所有存量及新增客户开放服务。</li>
+                                    <li>全面启动各项市场营销活动，包括广告投放、KOL合作等。</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="pipeline-item">
+                            <div class="pipeline-header">
+                                <div class="pipeline-dot"><i class="fa-solid fa-infinity text-xl"></i></div>
+                                <h4 class="pipeline-title">第四阶段 (持续进行): 迭代优化期</h4>
+                            </div>
+                            <div class="pipeline-content">
+                                <ul class="text-slate-600 dark:text-slate-300 space-y-2 list-disc list-inside">
+                                    <li>持续追踪KPIs，分析用户行为数据，为产品迭代提供支持。</li>
+                                    <li>建立常态化用户反馈渠道，定期进行产品迭代和功能升级。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-on-scroll space-y-8">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">成功衡量指标(KPIs)：科学、量化地评估项目战略成效</h3>
+                    <p class="mt-3 text-base text-slate-600 dark:text-slate-400">为科学评估本项目的成功与否，我们设立了聚焦于客户获取、资产留存及核心业务拉动作用的KPI体系，以衡量项目的核心战略价值。</p>
+                </div>
+                <div class="max-w-5xl mx-auto">
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-summary">
+                                <i class="fa-solid fa-users-viewfinder gemini-gradient-text"></i>
+                                <h4>客户获取指标</h4>
+                            </div>
+                            <div class="kpi-details">
+                                <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-400 list-disc list-inside">
+                                    <li><strong>新增入金账户数 (NFAs):</strong> 衡量营销活动带来的新客户转化能力。</li>
+                                    <li><strong>单客获取成本 (CPA):</strong> 评估营销投入的效率。</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="kpi-card">
+                            <div class="kpi-summary">
+                                <i class="fa-solid fa-cubes-stacked gemini-gradient-text"></i>
+                                <h4>产品采纳指标</h4>
+                            </div>
+                            <div class="kpi-details">
+                                <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-400 list-disc list-inside">
+                                    <li><strong>存量客户渗透率:</strong> 已开通功能的存量客户占总存量客户的比例。</li>
+                                    <li><strong>货币基金总AUM:</strong> 衡量平台吸引和沉淀资金的总能力。</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="kpi-card">
+                            <div class="kpi-summary">
+                                <i class="fa-solid fa-arrow-right-arrow-left gemini-gradient-text"></i>
+                                <h4>客户活跃与转化</h4>
+                            </div>
+                            <div class="kpi-details">
+                                <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-400 list-disc list-inside">
+                                   <li><strong>平均持有时长:</strong> 反映客户对产品作为长期现金管理工具的认可度。</li>
+                                   <li><strong>交叉转化率:</strong> 使用货基的客户中，后续进行股票交易或使用融资融券的比例。</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="kpi-card">
+                            <div class="kpi-summary">
+                                <i class="fa-solid fa-chart-pie gemini-gradient-text"></i>
+                                <h4>业务影响指标</h4>
+                            </div>
+                            <div class="kpi-details">
+                                <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-400 list-disc list-inside">
+                                   <li><strong>平台净资产流入:</strong> 衡量项目对公司整体资产规模的贡献。</li>
+                                   <li><strong>客户留存率变化:</strong> 对比项目上线前后，平台整体客户留存率的变化情况。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="fade-in-on-scroll space-y-8">
+                 <div class="max-w-4xl mx-auto text-center">
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">资源需求与预算考量</h3>
+                     <p class="mt-3 text-base text-slate-600 dark:text-slate-400">为确保本项目的成功实施，我们需要在技术、营销及人力方面投入专项资源。</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="report-card rounded-2xl p-8 text-center">
+                        <i class="fa-solid fa-laptop-code text-4xl text-sky-500 mb-4"></i>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white">技术资源</h4>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">投入前端、后端及测试工程师资源，用于平台功能的开发、集成和测试。此为一次性主要投入，后续需考虑持续的系统维护成本。</p>
+                    </div>
+                    <div class="report-card rounded-2xl p-8 text-center">
+                         <i class="fa-solid fa-bullhorn text-4xl text-amber-500 mb-4"></i>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white">市场营销预算</h4>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">需要一笔专项的上市营销预算，用于覆盖广告投放、KOL合作、内容制作及上市推广活动的奖励支出。</p>
+                    </div>
+                     <div class="report-card rounded-2xl p-8 text-center">
+                         <i class="fa-solid fa-user-gear text-4xl text-emerald-500 mb-4"></i>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white">人力资源</h4>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">任命一位专职产品经理全程负责该项目。随着业务增长，需相应增加客户服务团队编制并进行专项培训。</p>
+                    </div>
+                </div>
+            </div>
+
+             <div class="fade-in-on-scroll">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <a href="index.html" class="nav-block nav-block-1"> <i class="fa-solid fa-chart-pie"></i> <h3>开篇总览</h3> </a>
+                    <a href="module2.html" class="nav-block nav-block-2"> <i class="fa-solid fa-magnifying-glass-chart"></i> <h3>市场深度解析</h3> </a>
+                    <a href="module3.html" class="nav-block nav-block-3" style="color: #1e293b;"> <i class="fa-solid fa-shield-halved"></i> <h3>监管与合规</h3> </a>
+                    <a href="module4.html" class="nav-block nav-block-4"> <i class="fa-solid fa-chess"></i> <h3>竞争格局</h3> </a>
+                    <a href="module5.html" class="nav-block nav-block-5"> <i class="fa-solid fa-map-signs"></i> <h3>行动蓝图</h3> </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-200 dark:border-slate-800 mt-20">
+        <div class="container mx-auto px-6 py-8 text-center text-slate-500 dark:text-slate-400">
+            <p class="text-slate-600 dark:text-slate-400">嘉实基金: 李先强</p>
+        </div>
+    </footer>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+            // Standard theme toggler and scroll observer setup
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const userTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const applyTheme = (theme) => { if (theme === 'dark') { document.documentElement.classList.add('dark'); themeIcon.classList.remove('fa-moon'); themeIcon.classList.add('fa-sun'); } else { document.documentElement.classList.remove('dark'); themeIcon.classList.remove('fa-sun'); themeIcon.classList.add('fa-moon'); } };
+            if (userTheme === 'dark' || (!userTheme && systemTheme)) { applyTheme('dark'); } else { applyTheme('light'); }
+            themeToggle.addEventListener('click', () => { const isDark = document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', isDark ? 'dark' : 'light'); applyTheme(isDark ? 'dark' : 'light'); });
+            
+            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }); }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
+
+            // REVISION 1: JS for Interactive Pipeline
+            const pipelineItems = document.querySelectorAll('.pipeline-item');
+            pipelineItems.forEach(item => {
+                const header = item.querySelector('.pipeline-header');
+                header.addEventListener('click', () => {
+                    // Per your request, clicking only opens and never closes.
+                    if (!item.classList.contains('active')) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+            
+            // REVISION 2: JS for Interactive KPI Cards
+            const kpiCards = document.querySelectorAll('.kpi-card');
+            kpiCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const isAlreadyExpanded = card.classList.contains('expanded');
+                    
+                    // Remove 'expanded' from all cards first
+                    kpiCards.forEach(c => c.classList.remove('expanded'));
+                    
+                    // If the clicked card was not already expanded, expand it.
+                    // This creates a toggle effect: click to open, click another to close this one and open the other, click the same one again to close.
+                    if (!isAlreadyExpanded) {
+                        card.classList.add('expanded');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
